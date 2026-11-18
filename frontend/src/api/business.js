@@ -1,6 +1,14 @@
 import {request} from './client.js';
-export const loadAll=async()=>Object.fromEntries(await Promise.all(['sources','periods','policies','runs','schedules','deliveries','audits'].map(async k=>[k,await request('/'+k)])));
+export const loadAll=async()=>Object.fromEntries(await Promise.all(['sources','periods','policies','runs','schedules','deliveries','audits','meters','readings','month-factors','month-closes','allocations','adjustments','meter-jobs'].map(async k=>[k.replace(/-/g,'_'),await request('/'+k)])));
 export const saveSource=(data,id)=>request('/sources'+(id?'/'+id:''),id?'PUT':'POST',{data});
 export const savePolicy=data=>request('/policies','POST',{data});
 export const submitRun=data=>request('/runs','POST',data);
 export const approveRun=(id,note)=>request('/runs/'+id+'/approve','POST',{note});
+export const saveMeter=(data,id)=>request('/meters'+(id?'/'+id:''),id?'PUT':'POST',data);
+export const saveReading=(data,id)=>request('/readings'+(id?'/'+id:''),id?'PUT':'POST',data);
+export const deleteReading=id=>request('/readings/'+id,'DELETE');
+export const saveFactor=data=>request('/month-factors','POST',data);
+export const closeMonth=month=>request('/month-closes','POST',{month});
+export const reopenMonth=month=>request('/month-closes/reopen','POST',{month});
+export const meterTrace=id=>request('/meters/'+id+'/trace');
+export const pumpJobs=()=>request('/meter-jobs/pump','POST');

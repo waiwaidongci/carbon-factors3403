@@ -26,4 +26,6 @@ def seed():
    if not db.query(Source).filter_by(natural_key=key).first():db.add(Source(natural_key=key,data=data))
   if not db.query(Policy).filter_by(version=CONFIG['policy']['version']).first():db.add(Policy(version=CONFIG['policy']['version'],data=CONFIG['policy']))
   db.commit();print(json.dumps({'users':db.query(User).count(),'sources':db.query(Source).count(),'policies':db.query(Policy).count(),'periods':db.query(Period).count()},ensure_ascii=False))
+ from scripts.seed_meters import seed_meters
+ seed_meters()
 if __name__=='__main__':seed()

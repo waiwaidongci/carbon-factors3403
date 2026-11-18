@@ -1,2 +1,5 @@
 ROLES=('admin','analyst','viewer')
 STATUSES=('queued','running','completed','failed')
+READING_KINDS=('regular','change_out','change_in')
+METER_JOB_KINDS=('rebuild','factor_refresh')
+METER_JOB_STATUSES=('queued','running','completed','failed')
